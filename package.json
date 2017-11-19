@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "clean": "gulp clean"
+    "clean": "gulp clean",
+    "start": "gulp serve"
   },
   "author": "derevyankindenis <derevyankindenis@mail.ru>",
   "license": "ISC",

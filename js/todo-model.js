@@ -17,7 +17,7 @@ export default class ToDoModel {
       complete: false
     };
 
-    // localStorage.setItem('ToDoApp', JSON.parse);
+    localStorage.setItem('ToDoApp', JSON.stringify(this.data));
     return id;
   }
 
@@ -27,10 +27,12 @@ export default class ToDoModel {
 
   deleteTask(id) {
     delete this.data[id];
+    localStorage.setItem('ToDoApp', JSON.stringify(this.data));
   }
 
   updateCompleteTask(id, complete) {
     this.data[id].complete = complete;
+    localStorage.setItem('ToDoApp', JSON.stringify(this.data));
   }
 
 }

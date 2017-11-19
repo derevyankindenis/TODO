@@ -58,14 +58,14 @@
 
 .todo__addbtn::after,
 .todo__addbtn::before {
-    width: 5px;
+    width: 3px;
     height: 20px;
     background-color: gray;
 }
 
 .todo__addbtn::after {
     width: 20px;
-    height: 5px;
+    height: 3px;
 }
 
 .todo__list {

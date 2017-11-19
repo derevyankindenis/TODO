@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html lang="ru">
+
     <head>
         <meta charset="utf-8">
         <title> TODO list </title>
         <link href="css/style.min.css" rel="stylesheet">
     </head>
-    <body>
 
+    <body>
         <div class="todo">
             <header class="todo__header">
                 <h1 class="todo__title">Список дел</h1>
@@ -14,25 +15,18 @@
                 <button class="todo__addbtn action-btn" type="button"></button>
             </header>
             <ul class="todo__list">
-                <li class="todo__task">
-                    <span class="todo__text-task"> Задача 1 </span>
-                    <button class="todo__checktask action-btn" type="button"></button>
-                    <button class="todo__deltask action-btn" type="button"></button>
-                </li>
-                <li class="todo__task">
-                    <span class="todo__text-task "> Задача 2 </span>
-                    <button class="todo__checktask action-btn" type="button"></button>
-                    <button class="todo__deltask action-btn" type="button"></button>
-                </li>
-                <li class="todo__task">
-                    <span class="todo__text-task"> Задача 3 </span>
-                    <button class="todo__checktask action-btn" type="button"></button>
-                    <button class="todo__deltask action-btn" type="button"></button>
-                </li>
             </ul>
             <footer class="todo__footer"></footer>
         </div>
+        
 
+        <template id="task-template">
+            <li class="todo__task">
+                <span class="todo__text-task"> Задача </span>
+                <button class="todo__checktask action-btn" type="button"></button>
+                <button class="todo__deltask action-btn" type="button"></button>
+            </li>
+        </template>
 
         <script src="js/main.js"></script>
     </body>

@@ -35,7 +35,12 @@ gulp.task('htmls', function () {
         .pipe(server.stream());
 });
 
-gulp.task('build', ['htmls', 'styles', 'scripts']);
+gulp.task('imgs', function () {
+    return gulp.src('./img/*.{svg, png}')
+    .pipe(gulp.dest('./build/img'));
+});
+
+gulp.task('build', ['htmls', 'imgs', 'styles', 'scripts']);
 
 gulp.task('js-watch', ['scripts'], function (done) {
     server.reload();

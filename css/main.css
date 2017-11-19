@@ -27,6 +27,7 @@
     border: none;
     border-top: 1px solid grey;
     border-left: 1px solid grey;
+    border-bottom: 1px solid grey;
 }
 
 .action-btn {
@@ -52,6 +53,7 @@
     height: 50px;
     border-top: 1px solid grey;
     border-right: 1px solid grey;
+    border-bottom: 1px solid grey;
 }
 
 .todo__addbtn::after,
@@ -81,11 +83,6 @@
     background-color: white;
 }
 
-.todo__text-task--complete {
-    text-decoration: line-through;
-    opacity: 0.5;
-}
-
 .todo__text-task {
     width: 80%;
     height: 50px;
@@ -96,8 +93,8 @@
     font-size: 20px;
 }
 
-.todo__task:hover > .todo__deltask,
-.todo__task:hover > .todo__checktask {
+.todo__task:hover .todo__deltask,
+.todo__task:hover .todo__checktask {
     opacity: 1;
 }
 
@@ -140,4 +137,9 @@
 
 .todo__deltask::before {
     transform: rotate(-45deg);
+}
+
+.todo__task--complete .todo__text-task {
+    text-decoration: line-through;
+    opacity: 0.5;
 }

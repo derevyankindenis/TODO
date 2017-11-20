@@ -1,0 +1,1 @@
+{"version":3,"file":"utils.js","sources":["js/utils.js"],"sourcesContent":["\nconst generateId = () => {\n  return '_' + Math.random().toString(36).substr(2, 9);\n};\n\nexport {generateId};\n"],"names":[],"mappings":";;;AACA,MAAM,UAAU,GAAG,MAAM;EACvB,OAAO,GAAG,GAAG,IAAI,CAAC,MAAM,EAAE,CAAC,QAAQ,CAAC,EAAE,CAAC,CAAC,MAAM,CAAC,CAAC,EAAE,CAAC,CAAC,CAAC;CACtD;;;;;;;;;;"}

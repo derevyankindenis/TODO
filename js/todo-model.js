@@ -14,7 +14,8 @@ export default class ToDoModel {
 
     this.data[id] = {
       title: pTitle,
-      complete: false
+      complete: false,
+      time: Date.now()
     };
 
     localStorage.setItem('ToDoApp', JSON.stringify(this.data));
@@ -23,6 +24,10 @@ export default class ToDoModel {
 
   getTask(id) {
     return this.data[id];
+  }
+
+  editTask(id, title) {
+    this.data[id].title = title;
   }
 
   deleteTask(id) {

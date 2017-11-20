@@ -1,43 +1,119 @@
 const KEYCODE_ENTER = 13;
 
+const SORT_OF = {
+  TITLE: 1,
+  TIME: 2
+};
+
 class ToDoView {
 
   constructor() {
+    this.taskListRender = [];
+    this.currentSort = SORT_OF.TIME;
     this.toDo = document.querySelector('.todo');
     this.toDoList = this.toDo.querySelector('.todo__list');
     this.taskInput = this.toDo.querySelector('.todo__input');
-    this.taskInput.addEventListener('input', () => this.changeInputHandler());
     this.addTaskBtn = this.toDo.querySelector('.todo__addbtn');
+    this.radioTitleSort = this.toDo.querySelector('.todo__sort-title-field');
+    this.radioTimeSort = this.toDo.querySelector('.todo__sort-time-field');
+    this.taskTemplate = document.getElementById('task-template');
+    this.taskInput.addEventListener('input', () => this.changeInputHandler());
     this.addTaskBtn.addEventListener('click', () => this.clickNewTaskHandler());
     this.taskInput.addEventListener('keypress', (evt) => this.pressEnterHandler(evt));
-    this.taskTemplate = document.getElementById('task-template');
+    this.radioTitleSort.addEventListener('click', () => this.sortOfTitle());
+    this.radioTimeSort.addEventListener('click', () => this.sortOfTime());
+
   }
 
   addTask(id, taskObj) {
     const task = document.importNode(this.taskTemplate.content, true);
-    const toDoTask = task.querySelector('.todo__task');
-    const textTask = task.querySelector('.todo__text-task');
-    const deleteBtn = task.querySelector('.todo__deltask');
-    const completeBtn = task.querySelector('.todo__checktask');
-    textTask.textContent = taskObj.title;
-    if (taskObj.complete) toDoTask.classList.add('todo__task--complete');
-    deleteBtn.addEventListener('click', () => this.clickDeleteHandler(id, toDoTask));
-    completeBtn.addEventListener('click', () => this.clickCompletekHandler(id, toDoTask));
-    this.toDoList.insertAdjacentElement('afterBegin', toDoTask);
+
+    const taskDomElement = {
+      id,
+      time: taskObj.time,
+      mainElement: task.querySelector('.todo__task'),
+      textTask: task.querySelector('.todo__text-task'),
+      deleteBtn: task.querySelector('.todo__deltask'),
+      completeBtn: task.querySelector('.todo__checktask')
+    };
+
+    taskDomElement.textTask.value = taskObj.title;
+    if (taskObj.complete) taskDomElement.mainElement.classList.add('todo__task--complete');
+    taskDomElement.deleteBtn.addEventListener('click', () => this.clickDeleteHandler(taskDomElement));
+    taskDomElement.completeBtn.addEventListener('click', () => this.clickCompletekHandler(taskDomElement));
+    taskDomElement.textTask.addEventListener('blur', () => this.blurTaskInputHandler(taskDomElement));
+    this.addTaskInDOM(taskDomElement);
   }
 
-  clickDeleteHandler(id, toDoTask) {
-    this.toDoList.removeChild(toDoTask);
-    this.onClickDelete(id);
+  addTaskInDOM(taskDomElement) {
+    switch (this.currentSort) {
+      case SORT_OF.TIME:
+        this.insertForTimeSort(taskDomElement)
+        return;
+      case SORT_OF.TITLE:
+        this.insertForTitleSort(taskDomElement);
+        break;
+      default:
+        this.taskListRender.push(taskDomElement);
+        this.toDoList.appendChild(taskDomElement.mainElement);
+    }
   }
 
-  clickCompletekHandler(id, toDoTask) {
-    if (toDoTask.classList.contains('todo__task--complete')) {
-      toDoTask.classList.remove('todo__task--complete');
-      this.onClickComplete(id, false);
+
+  renderTaskList(taskList) {
+    const fragment = document.createDocumentFragment();
+    taskList.forEach((task) => fragment.appendChild(task.mainElement));
+    this.toDoList.innerHTML = '';
+    this.toDoList.appendChild(fragment);
+  }
+
+  insertForTitleSort(taskDomElement) {
+    for(let i = 0; i < this.taskListRender.length; i++) {
+      if (this.taskListRender[i].textTask.value.localeCompare(taskDomElement.textTask.value) === 1) {
+        this.toDoList.insertBefore(taskDomElement.mainElement, this.taskListRender[i].mainElement);
+        this.taskListRender.splice(i, 0, taskDomElement);
+        return;
+      }
+    }
+
+    this.taskListRender.push(taskDomElement);
+    this.toDoList.appendChild(taskDomElement.mainElement);
+  }
+
+  insertForTimeSort(taskDomElement) {
+    this.toDoList.appendChild( taskDomElement.mainElement);
+    this.taskListRender.unshift(taskDomElement);
+  }
+
+  sortOfTitle() {
+    this.currentSort = SORT_OF.TITLE;
+    this.taskListRender.sort((task1, task2) => {
+      return task1.textTask.value.localeCompare(task2.textTask.value);
+    });
+    this.renderTaskList(this.taskListRender);
+  }
+
+  sortOfTime() {
+    this.currentSort = SORT_OF.TIME;
+    this.taskListRender.sort((task1, task2) => {
+      return task1.time - task2.time;
+    });
+    this.renderTaskList(this.taskListRender);
+  }
+
+  clickDeleteHandler(taskDomElement) {
+    this.toDoList.removeChild(taskDomElement.mainElement);
+    this.taskListRender.splice(this.taskListRender.indexOf(taskDomElement), 1);
+    this.onClickDelete(taskDomElement.id);
+  }
+
+  clickCompletekHandler(taskDomElement) {
+    if (taskDomElement.mainElement.classList.contains('todo__task--complete')) {
+      taskDomElement.mainElement.classList.remove('todo__task--complete');
+      this.onClickComplete(taskDomElement.id, false);
     } else {
-      toDoTask.classList.add('todo__task--complete');
-      this.onClickComplete(id, true);
+      taskDomElement.mainElement.classList.add('todo__task--complete');
+      this.onClickComplete(taskDomElement.id, true);
     }
 
   }
@@ -60,6 +136,14 @@ class ToDoView {
     if (evt.keyCode === KEYCODE_ENTER && this.taskInput.value !== '') this.clickNewTaskHandler();
   }
 
+  blurTaskInputHandler(taskDomElement) {
+    if (taskDomElement.textTask.value === '') {
+      this.clickDeleteHandler(taskDomElement);
+    } else {
+      this.onEditTask(taskDomElement.id, taskDomElement.textTask.value);
+    }
+  }
+
   onClickDelete(id) {
   }
 
@@ -67,6 +151,9 @@ class ToDoView {
   }
 
   onClickAddNewTask(title) {
+  }
+
+  onEditTask(id, title) {
   }
 
 }

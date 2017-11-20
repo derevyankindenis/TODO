@@ -9,20 +9,34 @@
 
     <body>
         <div class="todo">
+
+          <div class="todo__work-field">
             <header class="todo__header">
-                <!-- <h1 class="todo__title">Список дел</h1> -->
                 <input class="todo__input" type="text" placeholder="Добавьте задачу" autofocus>
                 <button class="todo__addbtn action-btn" type="button" disabled></button>
             </header>
             <ul class="todo__list">
             </ul>
-            <footer class="todo__footer"></footer>
+          </div>
+
+          <aside class="todo__sort-panel">
+            <span class="todo__sort-head"> Сортировать </span>
+            <label class="todo__sort-time-field">
+              <input type="radio" name="sort-of-title" class="todo__radio-sort" checked>
+              <span class="todo__sort-time"> в порядке добавления </span>
+            </label>
+            <label class="todo__sort-title-field">
+              <input type="radio" name="sort-of-title" class="todo__radio-sort">
+              <span class="todo__sort-title-text"> по названию задачи </span>
+            </label>
+          </aside>
+
         </div>
-        
+
 
         <template id="task-template">
             <li class="todo__task">
-                <span class="todo__text-task"> Задача </span>
+                <input class="todo__text-task" type="text">
                 <button class="todo__checktask action-btn" type="button"></button>
                 <button class="todo__deltask action-btn" type="button"></button>
             </li>

@@ -14,6 +14,7 @@ export default class ToDoApp {
     this.view.onClickAddNewTask = (title) => this.newTaskHandler(title);
     this.view.onClickComplete = (id, complete) => this.completeTaksHandler(id, complete);
     this.view.onClickDelete = (id) => this.deleteTaskHandler(id);
+    this.view.onEditTask = (id, title) => this.editTaskHandler(id, title);
     this.fillListTasks(data);
   }
 
@@ -34,6 +35,10 @@ export default class ToDoApp {
 
   completeTaksHandler(id, complete) {
     this.model.updateCompleteTask(id, complete);
+  }
+
+  editTaskHandler(id, title) {
+    this.model.editTask(id, title);
   }
 
 };

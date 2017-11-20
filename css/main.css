@@ -1,10 +1,28 @@
 .todo {
     width: 60%;
-    max-width: 550px;
-    min-width: 330px;
-    min-height: 100px; 
+    max-width: 1000px;
+    min-width: 430px;
+    min-height: 100px;
     margin: 0 auto;
     box-sizing: border-box;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.todo__work-field {
+  width: 70%;
+}
+
+.todo__sort-panel {
+  width: 30%;
+  order: -1;
+}
+
+.todo__sort-panel > label {
+  margin-top: 10px;
+  margin-left: 10px;
+  display: block;
+  width: 100%;
 }
 
 .todo__header {
@@ -91,6 +109,7 @@
     padding-top: 15px;
     padding-bottom: 15px;
     font-size: 20px;
+    border: none;
 }
 
 .todo__task:hover .todo__deltask,

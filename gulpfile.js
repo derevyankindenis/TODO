@@ -5,6 +5,7 @@ const gulp = require('gulp');
 const minify = require('gulp-csso');
 const rename = require('gulp-rename');
 const plumber = require('gulp-plumber');
+var ghPages = require('gulp-gh-pages');
 const rollup = require('gulp-better-rollup');
 const sourcemaps = require('gulp-sourcemaps');
 const server = require('browser-sync').create();
@@ -64,4 +65,8 @@ gulp.task('serve', ['build'], function () {
 gulp.task('clean', function () {
     return del('build');
 });
-  
+
+gulp.task('deploy', function() {
+ return gulp.src('./build/**/*')
+   .pipe(ghPages());
+});

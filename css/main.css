@@ -143,3 +143,13 @@
     text-decoration: line-through;
     opacity: 0.5;
 }
+
+.todo__task--complete .todo__checktask {
+    opacity: 1;
+}
+
+.todo__task--complete .todo__checktask::after,
+.todo__task--complete .todo__checktask::before {
+    border-right: 2px solid green;
+    border-bottom: 2px solid green;
+}

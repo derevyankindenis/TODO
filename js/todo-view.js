@@ -2,7 +2,8 @@ const KEYCODE_ENTER = 13;
 
 const SORT_OF = {
   TITLE: 1,
-  TIME: 2
+  TITLE_REVERSE: 2,
+  TIME: 3
 };
 
 class ToDoView {
@@ -14,15 +15,16 @@ class ToDoView {
     this.toDoList = this.toDo.querySelector('.todo__list');
     this.taskInput = this.toDo.querySelector('.todo__input');
     this.addTaskBtn = this.toDo.querySelector('.todo__addbtn');
-    this.radioTitleSort = this.toDo.querySelector('.todo__sort-title-field');
-    this.radioTimeSort = this.toDo.querySelector('.todo__sort-time-field');
+    this.radioTitleSort = document.getElementById('sort-title');
+    this.radioTimeSort = document.getElementById('sort-time');
+    this.radioTitleReverseSort = document.getElementById('sort-title-reverse');
     this.taskTemplate = document.getElementById('task-template');
     this.taskInput.addEventListener('input', () => this.changeInputHandler());
     this.addTaskBtn.addEventListener('click', () => this.clickNewTaskHandler());
     this.taskInput.addEventListener('keypress', (evt) => this.pressEnterHandler(evt));
     this.radioTitleSort.addEventListener('click', () => this.sortOfTitle());
     this.radioTimeSort.addEventListener('click', () => this.sortOfTime());
-
+    this.radioTitleReverseSort.addEventListener('click', () => this.sortOfTitle(true));
   }
 
   addTask(id, taskObj) {
@@ -53,6 +55,9 @@ class ToDoView {
       case SORT_OF.TITLE:
         this.insertForTitleSort(taskDomElement);
         break;
+      case SORT_OF.TITLE_REVERSE:
+        this.insertForTitleSort(taskDomElement, true);
+        break;
       default:
         this.taskListRender.push(taskDomElement);
         this.toDoList.appendChild(taskDomElement.mainElement);
@@ -67,9 +72,10 @@ class ToDoView {
     this.toDoList.appendChild(fragment);
   }
 
-  insertForTitleSort(taskDomElement) {
+  insertForTitleSort(taskDomElement, reverse = false) {
+    const compareResult = reverse ? -1 : 1;
     for(let i = 0; i < this.taskListRender.length; i++) {
-      if (this.taskListRender[i].textTask.value.localeCompare(taskDomElement.textTask.value) === 1) {
+      if (this.taskListRender[i].textTask.value.localeCompare(taskDomElement.textTask.value) === compareResult) {
         this.toDoList.insertBefore(taskDomElement.mainElement, this.taskListRender[i].mainElement);
         this.taskListRender.splice(i, 0, taskDomElement);
         return;
@@ -85,11 +91,15 @@ class ToDoView {
     this.taskListRender.unshift(taskDomElement);
   }
 
-  sortOfTitle() {
-    this.currentSort = SORT_OF.TITLE;
-    this.taskListRender.sort((task1, task2) => {
-      return task1.textTask.value.localeCompare(task2.textTask.value);
-    });
+  sortOfTitle(reverse = false) {
+    this.currentSort = reverse ? SORT_OF.TITLE_REVERSE : SORT_OF.TITLE;
+    let sortFunction;
+    if (reverse) {
+      sortFunction = (task1, task2) => task2.textTask.value.localeCompare(task1.textTask.value);
+    } else {
+      sortFunction = (task1, task2) => task1.textTask.value.localeCompare(task2.textTask.value);
+    }
+    this.taskListRender.sort(sortFunction);
     this.renderTaskList(this.taskListRender);
   }
 

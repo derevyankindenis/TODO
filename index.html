@@ -18,19 +18,14 @@
             <ul class="todo__list">
             </ul>
           </div>
-
           <aside class="todo__sort-panel">
-            <span class="todo__sort-head"> Сортировать </span>
-            <label class="todo__sort-time-field">
-              <input type="radio" name="sort-of-title" class="todo__radio-sort" checked>
-              <span class="todo__sort-time"> в порядке добавления </span>
-            </label>
-            <label class="todo__sort-title-field">
-              <input type="radio" name="sort-of-title" class="todo__radio-sort">
-              <span class="todo__sort-title-text"> по названию задачи </span>
-            </label>
+            <input type="radio" name="sort" id="sort-time" checked>
+            <label for="sort-time" class="todo__sort-option todo__sort-option--time" ></label>
+            <input type="radio" name="sort" id="sort-title">
+            <label for="sort-title" class="todo__sort-option todo__sort-option--title" ></label>
+            <input type="radio" name="sort" id="sort-title-reverse">
+            <label for="sort-title-reverse" class="todo__sort-option todo__sort-option--title-reverse" ></label>
           </aside>
-
         </div>
 
 

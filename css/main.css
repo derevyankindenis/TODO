@@ -1,28 +1,56 @@
 .todo {
-    width: 60%;
+    width: 50%;
     max-width: 1000px;
     min-width: 430px;
     min-height: 100px;
     margin: 0 auto;
     box-sizing: border-box;
     display: flex;
-    flex-wrap: wrap;
 }
 
 .todo__work-field {
-  width: 70%;
+  width: 90%;
 }
 
 .todo__sort-panel {
-  width: 30%;
-  order: -1;
+  width: 10%;
 }
 
-.todo__sort-panel > label {
-  margin-top: 10px;
-  margin-left: 10px;
+.todo__sort-option {
   display: block;
   width: 100%;
+  height: 50px;
+  background-color: transparent;
+  box-sizing: border-box;
+  background-position: center;
+  background-size: 50%;
+  background-repeat: no-repeat;
+  cursor: pointer;
+  border: none;
+  opacity: 0.5;
+}
+
+.todo__sort-panel input {
+  display: none;
+}
+
+
+input:checked + .todo__sort-option,
+.todo__sort-option:hover {
+  opacity: 1;
+  background-size: contain;
+}
+
+.todo__sort-option--time {
+  background-image: url("../img/time.svg");
+}
+
+.todo__sort-option--title {
+  background-image: url("../img/az.svg");
+}
+
+.todo__sort-option--title-reverse {
+  background-image: url("../img/za.svg");
 }
 
 .todo__header {
@@ -68,6 +96,7 @@
 }
 
 .todo__addbtn {
+    width: 10%;
     height: 50px;
     border-top: 1px solid grey;
     border-right: 1px solid grey;
@@ -86,6 +115,8 @@
     height: 3px;
 }
 
+
+
 .todo__list {
     margin: 0px;
     padding: 0px;
@@ -97,6 +128,7 @@
 .todo__task {
     height: 50px;
     border: 1px solid grey;
+    border-top: none;
     display: flex;
     background-color: white;
 }
